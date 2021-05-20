@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources
-    [<!ENTITY appName "MOHS Health Worker Training">
+    [<!ENTITY appName "MOHS Digital Classroom">
     <!ENTITY companyName "Ministry of Health and Sanitation, Sierre Leone"> ]>
 <resources>
     <string name="app_name">&appName;</string>
