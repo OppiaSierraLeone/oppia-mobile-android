@@ -47,6 +47,14 @@
       "visible_byvalue": "other"
     },
     {
+      "name": "certificate_name",
+      "label": "Name to appear on certificates",
+      "required": true,
+      "helper_text": "Please enter your name exactly as you would like it to appear on any certificates you're awarded",
+      "type": "str",
+      "order": 7
+    },
+    {
       "name": "work_area",
       "label": "Which best describes the area where you work?",
       "required": false,
@@ -1314,7 +1322,8 @@
         "first_name",
         "last_name",
         "email",
-        "phoneno"
+        "phoneno",
+        "certificate_name"
       ]
     },
     {
