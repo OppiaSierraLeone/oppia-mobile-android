@@ -10,7 +10,8 @@
         android:gravity="left"
         android:orientation="vertical">
 
-        <FrameLayout
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -18,6 +19,7 @@
             android:paddingTop="@dimen/course_icon_size"
             android:paddingBottom="@dimen/padding_large"
             android:textAppearance="@style/SectionHeader"
+            style="@style/HideForTablets"
             android:textColor="@color/toolbar_text_color">
 
             <ImageView
@@ -26,7 +28,6 @@
                 android:layout_height="150dp"
                 app:srcCompat="@drawable/sl_logo" />
 
-        </FrameLayout>
 
 
         <LinearLayout
