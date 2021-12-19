@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class BuildChecksOppiaCore {
+public class BuildChecksOppiaSL {
 
     private Context context;
     private SharedPreferences prefs;
@@ -36,8 +36,8 @@ public class BuildChecksOppiaCore {
         String oppiaServerDefault = context.getString(R.string.prefServerDefault);
         String oppiaServerHost = context.getString(R.string.oppiaServerHost);
 
-        assertEquals("https://demo.oppia-mobile.org/", oppiaServerDefault);
-        assertEquals("demo.oppia-mobile.org", oppiaServerHost);
+        assertEquals("https://training.sl.oppia-mobile.org/", oppiaServerDefault);
+        assertEquals("training.sl.oppia-mobile.org", oppiaServerHost);
 
         assertEquals(false, BuildConfig.ADMIN_PROTECT_SETTINGS);
         assertEquals(false, BuildConfig.ADMIN_PROTECT_ADVANCED_SETTINGS);
