@@ -192,7 +192,7 @@
         {"id": "public_health_officer", "value": "Public health officer/professional"},
         {"id": "researcher", "value": "Researcher"},
         {"id": "student", "value": "Student"},
-        {"id": "0ther_health_careprovider", "value": "Other health care provider"},
+        {"id": "other_health_careprovider", "value": "Other health care provider"},
         {"id": "non-health_professional", "value": "Non-health professional"},
         {"id": "other", "value": "Other (please specify): "}
       ]
