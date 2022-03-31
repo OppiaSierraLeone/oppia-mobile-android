@@ -4,9 +4,11 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertTrue;
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
@@ -18,9 +20,12 @@ import static org.mockito.Mockito.when;
 import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SdkSuppress;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
@@ -41,6 +46,8 @@ import androidTestFiles.Utils.CourseUtils;
 import androidTestFiles.Utils.FileUtils;
 import androidTestFiles.Utils.UITestActionsUtils;
 import androidx.test.rule.GrantPermissionRule;
+
+import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
 public class QuizResultsUITest extends DaggerInjectMockUITest {
@@ -115,7 +122,13 @@ public class QuizResultsUITest extends DaggerInjectMockUITest {
             onView(withId(R.id.nav_bottom_scorecard)).perform(click());
             onView(withId(R.id.tabs)).perform(UITestActionsUtils.selectTabAtPosition(2));
 
-            Thread.sleep(500); // wait for viewpager transition
+            // wait for viewpager transition
+            await().atMost(5, TimeUnit.SECONDS)
+                    .untilAsserted(
+                            () ->
+                                    onView(ViewMatchers.withId(R.id.attempts_list))
+                                        .check(matches(isCompletelyDisplayed()))
+                    );
             UITestActionsUtils.clickRecyclerViewPosition(R.id.attempts_list, 0);
 
             if (later) {
@@ -129,6 +142,7 @@ public class QuizResultsUITest extends DaggerInjectMockUITest {
 
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void showQuizResultsAtEndAndLater() throws Exception {
 
         installCourse(COURSE_QUIZ_SHOW_ALL);
@@ -137,6 +151,7 @@ public class QuizResultsUITest extends DaggerInjectMockUITest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void hideQuizResultsLater() throws Exception {
 
         installCourse(COURSE_QUIZ_HIDE_LATER);
@@ -145,6 +160,7 @@ public class QuizResultsUITest extends DaggerInjectMockUITest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void hideQuizResultsAtEnd() throws Exception {
 
         installCourse(COURSE_QUIZ_HIDE_AT_END);
@@ -153,6 +169,7 @@ public class QuizResultsUITest extends DaggerInjectMockUITest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void hideQuizResultsAtEndAndLater() throws Exception {
 
         installCourse(COURSE_QUIZ_HIDE_AT_END_AND_LATER);

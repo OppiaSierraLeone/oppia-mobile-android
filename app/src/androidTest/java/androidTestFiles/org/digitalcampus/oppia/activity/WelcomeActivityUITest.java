@@ -1,6 +1,7 @@
 package androidTestFiles.org.digitalcampus.oppia.activity;
 
 import android.Manifest;
+import android.os.Build;
 
 import org.digitalcampus.mobile.learning.BuildConfig;
 import org.digitalcampus.mobile.learning.R;
@@ -10,8 +11,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import androidTestFiles.Utils.MockedApiEndpointTest;
+
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SdkSuppress;
 import androidx.test.rule.GrantPermissionRule;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -20,9 +24,13 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.awaitility.Awaitility.await;
+
+import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
 public class WelcomeActivityUITest extends MockedApiEndpointTest {
@@ -34,11 +42,18 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
             new ActivityScenarioRule<>(WelcomeActivity.class);
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void showsLoginFragmentOnLoginButtonClick() throws InterruptedException {
         onView(withId(R.id.welcome_login))
                 .perform(scrollTo(), click());
 
-        Thread.sleep(200); // Wait for viewpager transition
+        // Wait for viewpager transition
+        await().atMost(5, TimeUnit.SECONDS)
+                .untilAsserted(
+                        () ->
+                                onView(ViewMatchers.withId(R.id.login_btn))
+                                        .check(matches(isCompletelyDisplayed()))
+                );
 
         onView(withId(R.id.login_btn))
                 .perform(scrollTo())
@@ -46,6 +61,7 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void showsRegisterFragmentOnRegisterButtonClick() throws InterruptedException {
 
         if (!BuildConfig.ALLOW_REGISTER_USER) {
@@ -55,13 +71,19 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
         onView(withId(R.id.welcome_register))
                 .perform(scrollTo(), click());
 
-        Thread.sleep(200);
+        await().atMost(5, TimeUnit.SECONDS)
+                .untilAsserted(
+                        () ->
+                                onView(ViewMatchers.withId(R.id.register_title))
+                                        .check(matches(isCompletelyDisplayed()))
+                );
 
         onView(withId(R.id.register_title))
                 .check(matches(isDisplayed()));
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void showsResetFragmentOnResetTabClicked() throws InterruptedException {
 
         onView(withId(R.id.welcome_login))
@@ -70,7 +92,12 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
         onView(withId(R.id.btn_reset_password))
                 .perform(scrollTo(), click());
 
-        Thread.sleep(200);
+        await().atMost(5, TimeUnit.SECONDS)
+                .untilAsserted(
+                        () ->
+                                onView(ViewMatchers.withId(R.id.reset_btn))
+                                        .check(matches(isCompletelyDisplayed()))
+                );
 
         onView(withId(R.id.reset_btn))
                 .perform(scrollTo())
@@ -78,6 +105,7 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void resetPassword_goToLoginScreenAfterSuccess() throws InterruptedException {
 
         startServer(200, null, 0);
@@ -88,7 +116,12 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
         onView(withId(R.id.btn_reset_password))
                 .perform(scrollTo(), click());
 
-        Thread.sleep(200);
+        await().atMost(5, TimeUnit.SECONDS)
+                .untilAsserted(
+                        () ->
+                                onView(ViewMatchers.withId(R.id.reset_btn))
+                                        .check(matches(isCompletelyDisplayed()))
+                );
 
         onView(withId(R.id.reset_username_field)).perform(typeText("username"), closeSoftKeyboard());
 
@@ -102,6 +135,7 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void resetPassword_goToLoginScreenAfterError() throws InterruptedException {
 
         startServer(400, null, 0);
@@ -112,7 +146,12 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
         onView(withId(R.id.btn_reset_password))
                 .perform(scrollTo(), click());
 
-        Thread.sleep(200);
+        await().atMost(5, TimeUnit.SECONDS)
+                .untilAsserted(
+                        () ->
+                                onView(ViewMatchers.withId(R.id.reset_btn))
+                                        .check(matches(isCompletelyDisplayed()))
+                );
 
         onView(withId(R.id.reset_username_field)).perform(typeText("username"), closeSoftKeyboard());
 
@@ -126,6 +165,7 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void rememberUsername_goToLoginScreenAfterSuccess() throws InterruptedException {
 
         startServer(200, null, 0);
@@ -136,7 +176,12 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
         onView(withId(R.id.btn_remember_username))
                 .perform(scrollTo(), click());
 
-        Thread.sleep(200);
+        await().atMost(5, TimeUnit.SECONDS)
+                .untilAsserted(
+                        () ->
+                                onView(ViewMatchers.withId(R.id.edit_email))
+                                        .check(matches(isCompletelyDisplayed()))
+                );
 
         onView(withId(R.id.edit_email)).perform(typeText("valid@email.is"), closeSoftKeyboard());
 
@@ -150,6 +195,7 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void rememberUsername_showsErrorIfEmailPatterInvalid() throws InterruptedException {
 
         startServer(200, null, 0);
@@ -160,7 +206,12 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
         onView(withId(R.id.btn_remember_username))
                 .perform(scrollTo(), click());
 
-        Thread.sleep(200);
+        await().atMost(5, TimeUnit.SECONDS)
+                .untilAsserted(
+                        () ->
+                                onView(ViewMatchers.withId(R.id.edit_email))
+                                        .check(matches(isCompletelyDisplayed()))
+                );
 
         onView(withId(R.id.edit_email)).perform(typeText("wrong-email"), closeSoftKeyboard());
 
@@ -171,6 +222,7 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
     }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void rememberUsername_goToLoginScreenAfterError() throws InterruptedException {
 
         startServer(400, null, 0);
@@ -180,8 +232,13 @@ public class WelcomeActivityUITest extends MockedApiEndpointTest {
 
         onView(withId(R.id.btn_remember_username))
                 .perform(scrollTo(), click());
-
-        Thread.sleep(200);
+        ;
+        await().atMost(5, TimeUnit.SECONDS)
+                .untilAsserted(
+                        () ->
+                                onView(ViewMatchers.withId(R.id.edit_email))
+                                        .check(matches(isCompletelyDisplayed()))
+                );
 
         onView(withId(R.id.edit_email)).perform(typeText("valid@email.is"), closeSoftKeyboard());
 
