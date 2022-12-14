@@ -22,3 +22,5 @@ sonarqube.properties
 projectFilesBackup/
 /sonarcloud
 /captures/
+
+/app/normal/
