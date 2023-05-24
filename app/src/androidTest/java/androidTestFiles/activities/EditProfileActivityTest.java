@@ -42,6 +42,7 @@ import org.mockito.Mock;
 
 import java.util.ArrayList;
 
+import androidTestFiles.utils.parent.BaseTest;
 import androidTestFiles.utils.parent.MockedApiEndpointTest;
 import androidTestFiles.database.TestDBHelper;
 
@@ -55,6 +56,7 @@ public class EditProfileActivityTest extends MockedApiEndpointTest {
     private static final String VALID_LAST_NAME = "Last Name";
     private static final String VALID_ORGANIZATION = "A organization";
     private static final String VALID_JOB_TITLE = "A job title";
+    public static final String VALID_PROFILE_RESPONSE = BaseTest.PATH_RESPONSES + "/response_200_profile.json";
 
     @Mock
     protected User user;
@@ -71,6 +73,7 @@ public class EditProfileActivityTest extends MockedApiEndpointTest {
         testDBHelper = new TestDBHelper(InstrumentationRegistry.getInstrumentation().getTargetContext());
         testDBHelper.setUp();
 
+        startServer(200, VALID_PROFILE_RESPONSE, 0);
     }
 
     @After
@@ -140,7 +143,7 @@ public class EditProfileActivityTest extends MockedApiEndpointTest {
     // https://oppia.atlassian.net/browse/OPPIA-1130
     public void checkShowsSubmitErrorMessageWhenServerError400Response() throws Exception {
 
-        startServer(400, ERROR_MESSAGE_BODY, 0);
+        enqueueResponse(400, ERROR_MESSAGE_BODY, 0);
 
         try (ActivityScenario<EditProfileActivity> scenario = ActivityScenario.launch(EditProfileActivity.class)) {
 
@@ -159,7 +162,7 @@ public class EditProfileActivityTest extends MockedApiEndpointTest {
     @Test
     public void checkDataSavedWhenServerSuccessResponse() throws Exception {
 
-        startServer(200, null, 0);
+        enqueueResponse(200, null, 0);
 
         try (ActivityScenario<EditProfileActivity> scenario = ActivityScenario.launch(EditProfileActivity.class)) {
 
@@ -189,7 +192,7 @@ public class EditProfileActivityTest extends MockedApiEndpointTest {
     // https://oppia.atlassian.net/browse/OPPIA-1130
     public void checkShowsSubmitErrorMessageWhenServerError500Response() throws Exception {
 
-        startServer(500, ERROR_MESSAGE_BODY, 0);
+        enqueueResponse(500, ERROR_MESSAGE_BODY, 0);
 
         try (ActivityScenario<EditProfileActivity> scenario = ActivityScenario.launch(EditProfileActivity.class)) {
 
