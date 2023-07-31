@@ -163,6 +163,8 @@ public class PrefsActivity extends AppActivity implements SharedPreferences.OnSh
 
     public static final String PREF_UPDATE_ACTIVITY_ON_LOGIN = "prefUpdateActivityOnLogin";
 
+    public static final String PREF_OFFLINE_COURSE_IMPORT = "prefOfflineCourseImport";
+
     private PreferenceChangedCallback currentPrefScreen;
 
     @Inject
@@ -252,6 +254,7 @@ public class PrefsActivity extends AppActivity implements SharedPreferences.OnSh
             Intent intent = new Intent(this, WelcomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            finishAffinity();
             return;
         }
 

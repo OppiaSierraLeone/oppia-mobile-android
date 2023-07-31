@@ -2,6 +2,7 @@ package org.digitalcampus.oppia.fragments.prefs;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import androidx.preference.Preference;
 
 import org.digitalcampus.mobile.learning.R;
 import org.digitalcampus.oppia.activity.AppActivity;
+import org.digitalcampus.oppia.activity.OfflineCourseImportActivity;
 import org.digitalcampus.oppia.activity.PrefsActivity;
 import org.digitalcampus.oppia.api.ApiEndpoint;
 import org.digitalcampus.oppia.api.RemoteApiEndpoint;
@@ -99,9 +101,10 @@ public class AdvancedPrefsFragment extends BasePreferenceFragment implements Pre
         liveUpdateSummary(PrefsActivity.PREF_STORAGE_OPTION);
         liveUpdateSummary(PrefsActivity.PREF_SERVER_TIMEOUT_CONN, " ms");
         liveUpdateSummary(PrefsActivity.PREF_SERVER_TIMEOUT_RESP, " ms");
-        usernamePref.setSummary(TextUtilsJava.isEmpty(usernamePref.getText()) ?
-                getString(R.string.about_not_logged_in) :
-                getString(R.string.about_logged_in, usernamePref.getText()));
+        boolean userLoggedIn = !TextUtilsJava.isEmpty(usernamePref.getText());
+        usernamePref.setSummary(userLoggedIn ?
+                getString(R.string.about_logged_in, usernamePref.getText()) :
+                getString(R.string.about_not_logged_in));
 
         serverPref.setOnPreferenceChangeListener((preference, newValue) -> {
             boolean mustUpdate = onPreferenceChangedDelegate(preference, newValue);
@@ -138,6 +141,13 @@ public class AdvancedPrefsFragment extends BasePreferenceFragment implements Pre
 
         findPreference(PrefsActivity.PREF_FLUSH_APP_CACHE).setOnPreferenceClickListener(preference -> {
             flushAppCache();
+            return true;
+        });
+
+        Preference prefOfflineCourseImport = findPreference(PrefsActivity.PREF_OFFLINE_COURSE_IMPORT);
+        prefOfflineCourseImport.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(getActivity(), OfflineCourseImportActivity.class);
+            startActivity(intent);
             return true;
         });
 
@@ -383,6 +393,7 @@ public class AdvancedPrefsFragment extends BasePreferenceFragment implements Pre
         } else {
             storagePref.setValue(storageOption);
         }
+        loadPrefs();
     }
 
     private void updateStorageList(Context ctx) {

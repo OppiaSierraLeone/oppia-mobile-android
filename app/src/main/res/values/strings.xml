@@ -290,6 +290,10 @@
     <string name="error_register_username_spaces">Your username cannot contain spaces</string>
     <string name="error_register_email">Email not valid</string>
     <string name="error_resource_app_not_found">You don\'t seem to have an app installed to open \'%1$s\'. Please install an app capable of opening this type of file.</string>
+    <string name="external_resource_app_missing">You don\'t seem to have an app installed that can open \'%1$s\'</string>
+    <string name="external_resource_install_app">Install app</string>
+
+
     <string name="error_resource_not_found">File: \'%1$s\' not found.</string>
     <string name="error_preloading_accounts">Error preloading accounts from CSV file</string>
     <string name="error_reset_password">Username or email not found\nPlease try again</string>
@@ -366,6 +370,7 @@
         needs the following permissions to function properly:</string>
     <string name="permissions.storage.title">Read and modify contents of the SD card</string>
     <string name="permissions.simple.title">Permissions needed</string>
+    <string name="permissions.denied">Permission denied</string>
     <string name="permissions.storage.description">&appName; needs access to the SD card to be able to store the downloaded media contents for the courses</string>
     <string name="permissions.phone_state.title">read phone state and identity</string>
     <string name="permissions.phone_state.description">&appName; needs access to the phone identity to get information about your device model and Android version</string>
@@ -375,6 +380,7 @@
     <string name="permissions.not_askable.info">You see this message because permissions were prompted before and you denied them and checked \"Don\'t ask again\"</string>
     <string name="permissions.bluetooth.message">The app needs some additional permissions to scan for Bluetooth devices.</string>
     <string name="error_apikey_expired">Your API key expired. Please, log in again.</string>
+    <string name="app_settings">App Settings</string>
 
     <string name="privacy.title">Privacy and Your Data</string>
     <string name="privacy.policy_info">Privacy policy</string>
@@ -654,6 +660,23 @@
     <string name="continue_anyway">Continue anyway</string>
     <string name="offline_user_not_found">Offline user not found.\nYou have no internet connection so only local users are available.</string>
     <string name="offline_user_invalid_password">Invalid password.\nYou have no internet connection so only local users are available.</string>
+    <string name="sdcard_not_available">SD card not available</string>
+    <string name="sdcard_not_available_message">To continue using the app the SD card is needed. \nPlease reinsert your SD card.</string>
+    <string name="sdcard_not_available_change_settings">SD card is not available. Cannot change to external storage</string>
+    <string name="close_app">Close app</string>
+
+    <!-- Offline course import -->
+    <string name="title_offline_course_import">Offline course import</string>
+    <string name="offline_course_import.instructions">To import courses, first click on the \"Add files\" button and select the .zip files for the courses and the media files you want to import.\n\nThen, wait until the files appear on the list and click the \"Import\" button.</string>
+    <string name="offline_course_import.add_files">Add files</string>
+    <string name="offline_course_import.import">Import</string>
+    <string name="offline_course_import.import_in_progress">Import in progress. Please, be patient.</string>
+    <string name="offline_course_import.importing_media_file">Importing media file: %s</string>
+    <string name="offline_course_import.empty_files">No files added yet.</string>
+    <string name="offline_course_import.import_completed">Import completed.</string>
+    <string name="offline_course_import.media_files_imported">Media files imported</string>
+    <string name="offline_course_import.course_files_imported">Course files imported</string>
+    <string name="bluetooth_not_supported">Bluetooth not supported</string>
 
 </resources>
 

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
+import org.apache.commons.io.IOUtils;
 import org.digitalcampus.mobile.learning.R;
 import org.digitalcampus.oppia.analytics.Analytics;
 import org.digitalcampus.oppia.application.App;
@@ -37,6 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.util.Enumeration;
@@ -85,11 +87,18 @@ public class FileUtils {
 
         long availableStorage = Storage.getAvailableStorageSize(context);
         long uncompressedSize = 0;
-        try (ZipFile zipFile = new ZipFile(sourceFile)) {
-            Enumeration<? extends ZipEntry> entries = zipFile.entries();
-            while (entries.hasMoreElements()) {
-                ZipEntry zipEntry = entries.nextElement();
-                uncompressedSize += zipEntry.getSize();
+        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(sourceFile))) {
+            byte[] buffer = new byte[4096];
+            ZipEntry zipEntry;
+
+            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                if (!zipEntry.isDirectory()) {
+                    int bytesRead;
+                    while ((bytesRead = zipInputStream.read(buffer)) != -1) {
+                        uncompressedSize += bytesRead;
+                    }
+                }
+                zipInputStream.closeEntry();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -370,5 +379,24 @@ public class FileUtils {
         final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    }
+
+    public static void copyFile(File sourceFile, File destinationFolder) {
+        if(!destinationFolder.exists()) {
+            destinationFolder.mkdirs();
+        }
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        try {
+            File destinationFile = new File(destinationFolder, sourceFile.getName());
+            inputStream = new FileInputStream(sourceFile);
+            outputStream = new FileOutputStream(destinationFile);
+            IOUtils.copy(inputStream, outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(inputStream);
+            IOUtils.closeQuietly(outputStream);
+        }
     }
 }
