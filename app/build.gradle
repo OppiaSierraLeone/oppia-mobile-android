@@ -9,7 +9,7 @@ repositories {
 }
 
 def version_code = 112
-def version_name = "7.4.7.sl.1.int"
+def version_name = "7.4.7.sl.2.int"
 
 android {
 
