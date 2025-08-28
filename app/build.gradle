@@ -4,8 +4,8 @@ apply plugin: 'com.android.application'
 apply from: '../jacoco.gradle'
 apply from: '../sonarqube.gradle'
 
-def version_code = 114
-def version_name = "7.4.9.sl.1.int"
+def version_code = 115
+def version_name = "7.4.10.sl.1.int"
 
 android {
 
@@ -20,7 +20,7 @@ android {
         logger.error('No properties file found. Using default values.')
     }
 
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         versionCode version_code
@@ -29,7 +29,7 @@ android {
         applicationId "sl.gov.mohs.training"
 
         minSdk 21
-        targetSdk 34
+        targetSdk 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // The following argument makes the Android Test Orchestrator run its
@@ -73,7 +73,7 @@ android {
 
     buildTypes {
 
-        all {
+        configureEach {
             //Define all the constant values that depend on the config properties
 
             def analyticsLibrary = "none"
